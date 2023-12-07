@@ -3,7 +3,7 @@ import LeftSideBar from '@/components/shared/LeftSideBar'
 import TopBar from '@/components/shared/TopBar'
 import { Outlet } from 'react-router-dom'
 
-const Rootlayout = () => {
+const RootLayout = () => {
   return (
     <div className='w-full md:flex'>
       <TopBar />
@@ -18,4 +18,4 @@ const Rootlayout = () => {
   )
 }
 
-export default Rootlayout
+export default RootLayout

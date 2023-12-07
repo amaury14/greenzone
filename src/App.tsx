@@ -6,21 +6,21 @@ import SigninForm from './_auth/forms/SigninForm'
 import SignupForm from './_auth/forms/SignupForm'
 import { Home, Explore, Saved, AllUsers, CreatePost, EditPost, PostDetails, Profile, UpdateProfile } from './_root/pages'
 import AuthLayout from './_auth/AuthLayout'
-import Rootlayout from './_root/RootLayout'
+import RootLayout from './_root/RootLayout'
 
 
 const App = () => {
   return (
-    <main className="flex h-screen">
+    <main className='flex h-screen'>
       <Routes>
         {/* public routes */}
         <Route element={<AuthLayout />}>
-          <Route path="/sign-in" element={<SigninForm />} />
-          <Route path="/sign-up" element={<SignupForm />} />
+          <Route path='/sign-in' element={<SigninForm />} />
+          <Route path='/sign-up' element={<SignupForm />} />
         </Route>
 
         {/* private routes */}
-        <Route element={<Rootlayout />}>
+        <Route element={<RootLayout />}>
           <Route index element={<Home />} />
           <Route path='/explore' element={<Explore />} />
           <Route path='/saved' element={<Saved />} />
