@@ -18,15 +18,17 @@ import { PostValidation } from '@/lib/validation'
 import { Models } from 'appwrite'
 import { useUserContext } from '@/context/AuthContext'
 import { useToast } from '../ui/use-toast'
-import { useCreatePost } from '@/lib/react-query/queriesAndMutations'
+import { useCreatePost, useUpdatePost } from '@/lib/react-query/queriesAndMutations'
 import Loader from '../shared/Loader'
 
 type PostFormProps = {
+    action: 'Create' | 'Update'
     post?: Models.Document
 }
 
-const PostForm = ({ post }: PostFormProps) => {
+const PostForm = ({ action, post }: PostFormProps) => {
     const { mutateAsync: createPost, isPending: isLoadingCreate } = useCreatePost()
+    const { mutateAsync: updatePost, isPending: isLoadingUpdate } = useUpdatePost()
     const { user } = useUserContext()
     const { toast } = useToast()
     const navigate = useNavigate()
@@ -45,6 +47,19 @@ const PostForm = ({ post }: PostFormProps) => {
 
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof PostValidation>) {
+        if (post && action === 'Update') {
+            const updatedPost = await updatePost({
+                ...values,
+                postId: post.$id,
+                imageId: post?.imageId,
+                imageUrl: post?.imageUrl
+            })
+            if (!updatedPost) {
+                toast({ title: 'Please try again' })
+            }
+            return navigate(`/posts/${post.$id}`)
+        }
+
         const newPost = await createPost({ ...values, userId: user.id })
         if (!newPost) {
             toast({
@@ -114,13 +129,13 @@ const PostForm = ({ post }: PostFormProps) => {
                 />
                 <div className='flex gap-4 items-center justify-end'>
                     <Button type='button' className='shad-button_dark_4'>Cancel</Button>
-                    <Button type='submit' className='shad-button_primary whitespace-nowrap'>
-                        {isLoadingCreate ? (
+                    <Button type='submit' className='shad-button_primary whitespace-nowrap' disabled={isLoadingCreate || isLoadingUpdate}>
+                        {isLoadingCreate || isLoadingUpdate ? (
                             <div className='flex-center gap-2'>
                                 <Loader /> Saving post...
                             </div>
                         ) : (
-                            'Submit'
+                            <>{action} Post</>
                         )}
                     </Button>
                 </div>
