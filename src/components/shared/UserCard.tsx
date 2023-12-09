@@ -1,5 +1,5 @@
 import { Models } from 'appwrite'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { Button } from '../ui/button'
 
 type UserCardProps = {
@@ -8,7 +8,8 @@ type UserCardProps = {
 
 const UserCard = ({ user }: UserCardProps) => {
   return (
-    <Link to={`/profile/${user.$id}`} className='user-card'>
+    // <Link to={`/profile/${user.$id}`} className='user-card'>
+    <div className='user-card'>
       <img
         src={user.imageUrl || '/assets/icons/profile-placeholder.svg'}
         alt='creator'
@@ -27,7 +28,7 @@ const UserCard = ({ user }: UserCardProps) => {
       <Button type='button' size='sm' className='shad-button_primary px-5'>
         Follow
       </Button>
-    </Link>
+    </div>
   )
 }
 

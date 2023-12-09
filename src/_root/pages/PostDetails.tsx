@@ -23,7 +23,8 @@ const PostDetails = () => {
           />
           <div className='post_details-info'>
             <div className='flex-between w-full'>
-              <Link to={`/profile/${post?.creator.$id}`} className='flex items-center gap-3'>
+              {/* <Link to={`/profile/${post?.creator.$id}`} className='flex items-center gap-3'> */}
+              <div className='flex items-center gap-3'>
                 <img
                   src={post?.creator.imageUrl || '/assets/icons/profile-placeholder.svg'}
                   alt='creator'
@@ -37,7 +38,7 @@ const PostDetails = () => {
                     <p className='subtle-semibold lg:small-regular'>{post?.location}</p>
                   </div>
                 </div>
-              </Link>
+              </div>
 
               <div className='flex-center'>
                 <Link to={`/update-post/${post?.$id}`} className={`${user.id !== post?.creator.$id && 'hidden'}`}>
