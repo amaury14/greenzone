@@ -6,11 +6,11 @@ import { useGetCurrentUser } from '@/lib/react-query/queriesAndMutations'
 const Saved = () => {
   const { data: currentUser } = useGetCurrentUser()
 
-  const savePosts = currentUser?.saves
+  const savePosts = (currentUser as Models.Document)?.saves
     .map((savePost: Models.Document) => ({
       ...savePost.post,
       creator: {
-        imageUrl: currentUser.imageUrl,
+        imageUrl: (currentUser as Models.Document).imageUrl,
       },
     }))
     .reverse()

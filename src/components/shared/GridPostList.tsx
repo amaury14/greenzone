@@ -5,8 +5,8 @@ import PostStats from '@/components/shared/PostStats';
 
 type GridPostsListProps = {
     posts: Models.Document[]
-    showUser: boolean
-    showStats: boolean
+    showUser?: boolean
+    showStats?: boolean
 }
 
 const GridPostList = ({ posts, showUser = true, showStats = true }: GridPostsListProps) => {
