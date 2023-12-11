@@ -27,8 +27,7 @@ const LeftSideBar = () => {
                         height={36}
                     />
                 </Link>
-                {/* <Link to={`/profile/${user.id}`} className='flex gap-3 items-center'> */}
-                <div className='flex gap-3 items-center'>
+                <Link to={`/profile/${user.id}`} className='flex gap-3 items-center'>
                     <img
                         src={user.imageUrl || '/assets/icons/profile-placeholder.svg'}
                         alt='profile'
@@ -36,16 +35,16 @@ const LeftSideBar = () => {
                     />
                     <div className="flex flex-col">
                         <p className="body-bold">{user.name}</p>
-                        <p className="small*regular text-light-3">@{user.email}</p>
+                        <p className="small-regular text-light-3">@{user.username}</p>
                     </div>
-                </div>
+                </Link>
                 <ul className="flex flex-col gap-6">
                     {
                         sidebarLinks.map((link: INavLink) => {
                             const isActive = pathname === link.route
                             return (
                                 <li className={`leftsidebar-link group ${isActive && 'bg-primary-500'}`} key={link.label}>
-                                    <NavLink                                        
+                                    <NavLink
                                         to={link.route}
                                         className='flex gap-4 items-center p-4'
                                     >
@@ -63,7 +62,7 @@ const LeftSideBar = () => {
                 </ul>
             </div>
             <Button variant='ghost' className='shad-button_ghost' onClick={() => signOut()}>
-                <img src='/assets/icons/logout.svg' alt='logout'/>
+                <img src='/assets/icons/logout.svg' alt='logout' />
                 <p className="small-medium lg:base-medium">Logout</p>
             </Button>
         </nav>
