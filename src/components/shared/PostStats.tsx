@@ -10,9 +10,9 @@ type PostStatsProps = {
 }
 
 const PostStats = ({ post, userId }: PostStatsProps) => {
-    const likesList = post?.likes.map((user: Models.Document) => user.$id)
+    const likesList = post?.likes?.map((user: Models.Document) => user.$id)
 
-    const [likes, setLikes] = useState<string[]>(likesList)
+    const [likes, setLikes] = useState<string[]>(likesList ?? [])
     const [isSaved, setIsSaved] = useState(false)
 
     const { mutate: likePost } = useLikePost()
@@ -64,7 +64,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
                     onClick={handleLikePost}
                     className='cursor-pointer'
                 />
-                <p className='smal-medium lg:base-medium'>{likes.length}</p>
+                <p className='smal-medium lg:base-medium'>{likes?.length}</p>
             </div>
             <div className='flex gap-2'>
                 {isSavingPost || isDeletingSaved ? <Loader /> :

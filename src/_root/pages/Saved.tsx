@@ -35,7 +35,7 @@ const Saved = () => {
           {savePosts.length === 0 ? (
             <p className='text-light-4'>No available posts</p>
           ) : (
-            <GridPostList posts={savePosts} showStats={false} />
+            <GridPostList posts={savePosts} showStats={true} />
           )}
         </ul>
       )}
