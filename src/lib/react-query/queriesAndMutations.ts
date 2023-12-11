@@ -4,8 +4,8 @@ import {
     useQuery,
     useQueryClient
 } from '@tanstack/react-query';
-import { createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getInfinitePosts, getPostById, getRecentPosts, getUserById, getUsers, likePost, savePost, searchPosts, signInAccount, signOutAccount, updatePost, updateUser } from '../appwrite/api';
-import { INewPost, INewUser, IUpdatePost, IUpdateUser } from '@/types';
+import { createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getInfinitePosts, getPostById, getRecentPosts, getUserById, getUsers, likePost, savePost, searchPosts, signInAccount, signOutAccount, updateFollow, updatePost, updateUser } from '../appwrite/api';
+import { INewPost, INewUser, IUpdatePost, IUpdateUser, IUser } from '@/types';
 import { QUERY_KEYS } from './queryKeys';
 
 export const useCreateUserAccount = () => {
@@ -195,5 +195,17 @@ export const useUpdateUser = () => {
                 queryKey: [QUERY_KEYS.GET_USER_BY_ID, data?.$id],
             });
         },
+    });
+};
+
+export const useUpdateFollow = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: ({ loggedUser, followUserId, isFollowed }: { loggedUser: IUser; followUserId: string; isFollowed: boolean; }) => updateFollow(loggedUser, followUserId, isFollowed),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_USERS],
+            });
+        }
     });
 };

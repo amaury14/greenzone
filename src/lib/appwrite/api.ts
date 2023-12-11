@@ -1,4 +1,4 @@
-import { INewPost, INewUser, IUpdatePost, IUpdateUser } from '../../types';
+import { INewPost, INewUser, IUpdatePost, IUpdateUser, IUser } from '../../types';
 import { ID, Query } from 'appwrite';
 import { account, appwriteConfig, avatars, databases, storage } from './config';
 import { URL } from 'url';
@@ -447,6 +447,30 @@ export async function updateUser(user: IUpdateUser) {
         }
 
         return updatedUser;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function updateFollow(loggedUser: IUser, followUserId: string, isFollowed: boolean) {
+    let follows = loggedUser?.follows ?? [];
+    if (isFollowed) {
+        follows.push(followUserId);
+    } else {
+        follows = follows.filter(item => item !== followUserId);
+    }
+    try {
+        const statusCode = await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.userCollectionId,
+            loggedUser.id,
+            {
+                follows
+            }
+        );
+        if (!statusCode) throw Error;
+
+        return { status: 'ok' };
     } catch (error) {
         console.log(error);
     }
